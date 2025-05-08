@@ -12,10 +12,14 @@ class TodoPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(25.0),
           child: Column(
             children: [
-              Text('Todo List'),
+              Text('Todo List', style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+              ),),
+              SizedBox(height: 20),
               Row(
                 children: [
                   Column(
@@ -61,18 +65,21 @@ class TodoPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextFormField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          labelText: 'Todo',
-                          border: OutlineInputBorder()
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20, right: 10),
+                        child: TextFormField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            labelText: 'Todo',
+                            border: OutlineInputBorder()
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty){
+                              return 'Please enter a todo';
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty){
-                            return 'Please enter a todo';
-                          }
-                          return null;
-                        },
                       )
                       ),
                       FilledButton(
@@ -97,7 +104,7 @@ class TodoPage extends StatelessWidget {
                 Expanded(
                   child: BlocBuilder<TodoBloc, TodoState>(
                     builder: (context, state){
-                      if (state is TodoLoaded){
+                      if (state is TodoLoading){
                         return Center(child: CircularProgressIndicator());
                       } else if (state is TodoLoaded){
                         if (state.todos.isEmpty){
