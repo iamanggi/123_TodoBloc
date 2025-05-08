@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
+import 'package:todo_app/pesentation/todo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider(create: (_) => TodoBloc(), 
+      child: TodoPage()),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
